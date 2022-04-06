@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
 namespace DGAuthServer;
@@ -12,7 +11,7 @@ namespace DGAuthServer;
 /// <remarks>이 속성을 사용하면 인증정보가 없을때는 AllowAnonymousAttribute으로
 /// 인증정보가 있을때는 AuthorizeAttribute처럼 작동한다.<br />
 /// 하지만 이 속성 자체는 리플레시 토큰처리를 하지 안으므로
-/// 리플레시 토큰은 있는 엑세스토큰을 없는 상황은 처리하지 못한다.
+/// 리플레시 토큰은 있는데 엑세스토큰을 없는 상황은 처리하지 못한다.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class AnonymousAndAuthorizeAttribute : Attribute, IAuthorizationFilter
@@ -22,7 +21,6 @@ public class AnonymousAndAuthorizeAttribute : Attribute, IAuthorizationFilter
 
 	}
 
-	
     public void OnAuthorization(AuthorizationFilterContext context)
 	{
 

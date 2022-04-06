@@ -52,8 +52,8 @@ namespace WebApi_JwtAuthTest
                     AccessTokenCookie = true,
                     RefreshTokenCookie = true,
                 }
-                , (options => options.UseSqlite("Data Source=DGAuthServerTest.db")));
-                //, null);
+                //, (options => options.UseSqlite("Data Source=DGAuthServerTest.db")));
+                , null);
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
