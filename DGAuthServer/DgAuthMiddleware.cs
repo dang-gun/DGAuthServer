@@ -64,8 +64,6 @@ public class DgAuthMiddleware
         }
 
 
-
-
         //토큰 정보를 기준으로 속성에 전달하기위한 값 처리를 한다.
         long idUser = 0;
         if (true == bToken)
@@ -76,6 +74,7 @@ public class DgAuthMiddleware
                 = DGAuthServerGlobal.Service
                     .AccessTokenValidate(
                         sToken
+                        , string.Empty
                         , context.Request);
         }
         else

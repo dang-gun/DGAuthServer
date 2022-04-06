@@ -136,10 +136,12 @@ public class DGAuthServerService
     /// </summary>
     /// <remarks>미들웨어에서도 호출해서 사용한다.</remarks>
     /// <param name="sToken"></param>
+    /// <param name="sClass"></param>
     /// <param name="request"></param>
     /// <returns>찾아낸 idUser, 토큰 자체가 없으면 -1, 토큰이 유효하지 않으면 0 </returns>
     public long AccessTokenValidate(
         string sToken
+        , string sClass
         , HttpRequest? request)
     {
         string sTokenFinal = String.Empty;
@@ -214,7 +216,8 @@ public class DGAuthServerService
             {
                 findAT
                     = db1.DGAuthServer_AccessToken
-                        .Where(w => w.idUser == idUser)
+                        .Where(w => w.idUser == idUser
+                                && w.Class == sClass)
                         .FirstOrDefault();
 
             }//end using db1
@@ -283,8 +286,13 @@ public class DGAuthServerService
     /// 쿠키를 사용중이라면 쿠키를 지워주는 기능을 한다.<br />
     /// bAllRevoke가 true라면 개인 시크릿 키가 재발급 되면서 
     /// 기존 엑세스토큰은 사용할 수 없게 된다.
+    /// <para>
+    /// 여러 사이트(혹은 프로그램)에서 하나의 인증서버를 두고 사용할경우 
+    /// idUser가 겹치면 다른 사이트에서도 엑세스토큰이 만료되게 된다.
+    /// </para>
     /// </remarks>
-    /// <param name="bAllRevoke">클래스와 상관없이 전체 엑세스 토큰을 리보크한다.
+    /// 
+    /// <param name="bAllRevoke">클래스와 상관없이 전체 엑세스 토큰을 리보크한다.<br />
     /// 개인 시크릿을 사용중이라면 false일때는 개인 시크릿이 변하지 않는다.
     /// </param>
     /// <param name="idUser"></param>
@@ -745,4 +753,44 @@ public class DGAuthServerService
             , cookieOptions);
     }
 
+    /// <summary>
+    /// 가지고 있는 리플레시 토큰의 만료여부를 확인하고
+    /// 만료된 토큰을 DB에서 지운다.
+    /// </summary>
+    public void DbClear()
+    {
+        //테이블 생성
+        using (DgAuthDbContext db1 = new DgAuthDbContext())
+        {
+            //이미 만료되지 않은 리스트 검색
+            IQueryable<DgAuthRefreshToken> findList
+                = db1.DGAuthServer_RefreshToken
+                    .Where(w => w.ActiveIs == true);
+
+            //토큰 체크
+            foreach (DgAuthRefreshToken itemRT in findList)
+            {
+                itemRT.ActiveCheck();
+            }
+
+            //체크된걸 저장하고
+            db1.SaveChanges();
+
+
+            //이미 만료된 리스트 검색
+            IQueryable<DgAuthRefreshToken> findEndList
+                = db1.DGAuthServer_RefreshToken
+                    .Where(w => w.ActiveIs == true);
+            //지우기
+            db1.DGAuthServer_RefreshToken.RemoveRange(findList);
+        }
+
+        //정리한 시간 기록
+        DGAuthServerGlobal.DbClearTime = DateTime.Now;
+        //다은 예정시간 계산
+        DGAuthServerGlobal.DbClearExpectedTime
+            = DGAuthServerGlobal.DbClearTime
+                .AddSeconds(DGAuthServerGlobal.Setting.DbClearTime);
+
+    }
 }

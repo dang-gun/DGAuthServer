@@ -183,6 +183,18 @@ public class DgAuthSettingModel
 	public string UserIdName { get; set; } = "idUser";
 
 	/// <summary>
+	/// DB 비우는 시간(초, s)
+	/// <para>기본값 604800 = 7일</para>
+	/// </summary>
+	/// <remarks>
+	/// 사용 종료된 리플레시 토큰을 DB에서 지우고
+	/// 남아있는 토큰의 수명을 확인하는 주기.
+	/// 
+	/// <para>서버 시작시간 기준으로 주기가 돌아간다.</para>
+	/// </remarks>
+	public int DbClearTime { get; set; } = 604800;
+
+	/// <summary>
 	/// 모든 데이터를 복사한다.
 	/// </summary>
 	/// <param name="data"></param>
@@ -206,6 +218,7 @@ public class DgAuthSettingModel
 
 		this.UserIdName = data.UserIdName;
 
+		this.DbClearTime = data.DbClearTime;
 	}
 		
 }

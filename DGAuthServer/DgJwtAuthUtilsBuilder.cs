@@ -58,8 +58,24 @@ public static class DgJwtAuthUtilsBuilder
         }
 
 
+        //db 클리어 설정
+        Timer timerDbClear
+            = new Timer((aa) 
+                =>
+                {
+                    DGAuthServerGlobal.Service.DbClear();
+                });
+        //타이머 시작
+        timerDbClear.Change(0, DGAuthServerGlobal.Setting.DbClearTime);
+
+        //다은 예정시간 계산
+        DGAuthServerGlobal.DbClearExpectedTime
+            = DGAuthServerGlobal.DbClearTime
+                .AddSeconds(DGAuthServerGlobal.Setting.DbClearTime);
+
         return services;
     }
+
 
     /// <summary>
     /// 어플리케이션(미들웨어) 빌더
