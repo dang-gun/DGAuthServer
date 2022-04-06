@@ -5,6 +5,9 @@ using DGAuthServer;
 
 namespace WebApi_JwtAuthTest
 {
+    /// <summary>
+    /// 
+    /// </summary>
 	public class Startup
 	{
         /// <summary>
@@ -29,16 +32,18 @@ namespace WebApi_JwtAuthTest
 
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             //API모델을 파스칼 케이스 유지하기
             services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
 
 
-            //Jwt Auth Setting 정보 전달
-            //appsettings.json 의 내용 전달
+            //DGAuthServer Setting 정보 전달
             //services.Configure<DgJwtAuthSettingModel>(Configuration.GetSection("JwtSecretSetting"));
             services.AddDgAuthServerBuilder(
                 new DgAuthSettingModel()
@@ -61,7 +66,11 @@ namespace WebApi_JwtAuthTest
             services.AddSwaggerGen();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

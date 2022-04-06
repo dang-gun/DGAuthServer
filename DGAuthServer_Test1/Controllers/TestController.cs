@@ -2,6 +2,9 @@
 
 namespace WebApi_JwtAuthTest.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
 	[Route("api/[controller]/[action]")]
 	[ApiController]
 	public class TestController : ControllerBase

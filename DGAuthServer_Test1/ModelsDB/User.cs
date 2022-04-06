@@ -4,6 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace ModelsDB
 {
+	/// <summary>
+	/// 유저 테이블
+	/// </summary>
 	public class User
 	{
 		/// <summary>

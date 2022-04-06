@@ -2,6 +2,9 @@
 
 namespace WebApi_JwtAuthTest.Models
 {
+    /// <summary>
+    /// api 결과용 기본 모델
+    /// </summary>
 	public class ApiResultModel
     {
         /// <summary>
