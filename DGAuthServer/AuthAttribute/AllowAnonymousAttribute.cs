@@ -1,5 +1,5 @@
 
-namespace DGAuthServer;
+namespace DGAuthServer.AuthAttribute;
 
 /// <summary>
 /// 익명 허용 == 인증 스킵 속성

@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace DGAuthServer;
+namespace DGAuthServer.Models;
 
 public class DgAuthSettingModel
 {

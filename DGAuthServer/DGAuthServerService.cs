@@ -1,4 +1,6 @@
 
+using DGAuthServer.Models;
+using DGAuthServer.ModelsDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

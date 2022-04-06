@@ -8,11 +8,11 @@ namespace DGAuthServer;
 /// 인증 미들웨어
 /// </summary>
 /// <remarks>인</remarks>
-public class DgJwtAuthMiddleware
+public class DgAuthMiddleware
 {
     private readonly RequestDelegate _next;
 
-    public DgJwtAuthMiddleware(RequestDelegate next)
+    public DgAuthMiddleware(RequestDelegate next)
     {
         _next = next;
     }

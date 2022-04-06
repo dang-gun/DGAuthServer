@@ -5,6 +5,7 @@ using ModelsDB;
 using System.Net;
 using Microsoft.Extensions.Options;
 using DGAuthServer;
+using DGAuthServer.AuthAttribute;
 
 namespace WebApi_JwtAuthTest.Controllers
 {

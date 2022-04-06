@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace DGAuthServer;
+namespace DGAuthServer.ModelsDB;
 
 /// <summary>
 /// 리플레시 토큰

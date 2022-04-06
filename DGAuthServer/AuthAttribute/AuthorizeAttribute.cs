@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 
-namespace DGAuthServer;
+namespace DGAuthServer.AuthAttribute;
 
 /// <summary>
 /// 인증 필수 속성

@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using DGAuthServer;
+using DGAuthServer.Models;
 
 namespace WebApi_JwtAuthTest
 {

@@ -1,4 +1,6 @@
 
+using DGAuthServer.Models;
+using DGAuthServer.ModelsDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,9 +32,6 @@ public static class DgJwtAuthUtilsBuilder
 
         //세팅 데이터 저장
         DGAuthServerGlobal.Setting.ToCopy(settingData);
-
-        //builder.addcl
-        //services.Configure<DgJwtAuthSettingModel>();
 
         //옵션 전달
         services.Configure<DgAuthSettingModel>(options =>
@@ -72,7 +71,7 @@ public static class DgJwtAuthUtilsBuilder
     {
 
         //JwtAuth 미들웨어 주입
-        app.UseMiddleware<DgJwtAuthMiddleware>();
+        app.UseMiddleware<DgAuthMiddleware>();
         return app;
     }
 }
