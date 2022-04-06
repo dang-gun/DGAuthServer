@@ -1,6 +1,5 @@
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
 namespace DGAuthServer;

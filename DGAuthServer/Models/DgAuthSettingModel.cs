@@ -2,7 +2,7 @@
 
 namespace DGAuthServer;
 
-public class DgAuthServerSettingModel
+public class DgAuthSettingModel
 {
 	/// <summary>
 	/// 인증용 헤더의 이름
@@ -186,7 +186,7 @@ public class DgAuthServerSettingModel
 	/// 모든 데이터를 복사한다.
 	/// </summary>
 	/// <param name="data"></param>
-	public void ToCopy(DgAuthServerSettingModel data)
+	public void ToCopy(DgAuthSettingModel data)
 	{
 		this.AuthHeaderName = data.AuthHeaderName;
 		this.AuthTokenStartName = data.AuthTokenStartName;

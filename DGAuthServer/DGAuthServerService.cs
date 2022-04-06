@@ -1,6 +1,5 @@
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -35,9 +34,9 @@ public class DGAuthServerService
         if (true == DGAuthServerGlobal.Setting.SecretAlone)
         {//혼자사용하는 시크릿
 
-            DgJwtAuthAccessToken? findAT = null;
+            DgAuthAccessToken? findAT = null;
 
-            using (DgJwtAuthDbContext db1 = new DgJwtAuthDbContext())
+            using (DgAuthDbContext db1 = new DgAuthDbContext())
             {
                 findAT 
                     = db1.DGAuthServer_AccessToken
@@ -53,7 +52,7 @@ public class DGAuthServerService
                 }
                 else
                 {//사용하는 시크릿이 없다.
-                    DgJwtAuthAccessToken newAT = new DgJwtAuthAccessToken();
+                    DgAuthAccessToken newAT = new DgAuthAccessToken();
                     //사용자 입력
                     newAT.idUser = idUser;
                     newAT.Class = sClass;
@@ -206,10 +205,10 @@ public class DGAuthServerService
                             nUser + DGAuthServerGlobal.Setting.SecretAloneDelimeter.Length);
 
             //찾은 엑세스토큰 데이터
-            DgJwtAuthAccessToken? findAT = null;
+            DgAuthAccessToken? findAT = null;
 
             //연결된 시크릿 검색
-            using (DgJwtAuthDbContext db1 = new DgJwtAuthDbContext())
+            using (DgAuthDbContext db1 = new DgAuthDbContext())
             {
                 findAT
                     = db1.DGAuthServer_AccessToken
@@ -296,9 +295,9 @@ public class DGAuthServerService
         , string sClass
         , HttpResponse? response)
     {
-        using (DgJwtAuthDbContext db1 = new DgJwtAuthDbContext())
+        using (DgAuthDbContext db1 = new DgAuthDbContext())
         {
-            IQueryable<DgJwtAuthAccessToken> iqFindAT;
+            IQueryable<DgAuthAccessToken> iqFindAT;
 
             if (true == bAllRevoke)
             {//전체 검색
@@ -366,7 +365,7 @@ public class DGAuthServerService
         }
 
 
-        using (DgJwtAuthDbContext db1 = new DgJwtAuthDbContext())
+        using (DgAuthDbContext db1 = new DgAuthDbContext())
         {
             bool bNew = false;
 
@@ -385,7 +384,7 @@ public class DGAuthServerService
                 case RefreshTokenUsageType.ReUseAddTime:
                     {
                         //기존 토큰이 있는지 찾는다.
-                        DgJwtAuthRefreshToken? findRT
+                        DgAuthRefreshToken? findRT
                             = db1.DGAuthServer_RefreshToken
                                 .Where(w => w.idUser == idUser
                                         && w.Class == sClass)
@@ -465,7 +464,7 @@ public class DGAuthServerService
 
 
                 //테이블에 저장한다.
-                DgJwtAuthRefreshToken newRT = new DgJwtAuthRefreshToken()
+                DgAuthRefreshToken newRT = new DgAuthRefreshToken()
                 {
                     idUser = idUser,
                     Class = sClass,
@@ -484,14 +483,14 @@ public class DGAuthServerService
 
                 //기존 토큰 만료 처리
                 //대상 검색
-                IQueryable<DgJwtAuthRefreshToken> iqFindRT
+                IQueryable<DgAuthRefreshToken> iqFindRT
                     = db1.DGAuthServer_RefreshToken
                         .Where(w => w.idUser == idUser
                                 && w.Class == sClass
                                 && true == w.ActiveIs);
                 //linq는 데이터를 수정할때는 좋은 솔류션이 아니다.
                 //반복문으로 직접수정하는 것이 훨씬 성능에 도움이 된다.
-                foreach (DgJwtAuthRefreshToken itemURT in iqFindRT)
+                foreach (DgAuthRefreshToken itemURT in iqFindRT)
                 {
                     //만료 시간을 기입함
                     itemURT.RevokeTime = dtNow;
@@ -547,9 +546,9 @@ public class DGAuthServerService
         }
 
 
-        using (DgJwtAuthDbContext db1 = new DgJwtAuthDbContext())
+        using (DgAuthDbContext db1 = new DgAuthDbContext())
         {
-            DgJwtAuthRefreshToken? findRT
+            DgAuthRefreshToken? findRT
                 = db1.DGAuthServer_RefreshToken
                     .Where(w => w.RefreshToken == sRefreshToken
                             && w.ActiveIs == true
@@ -597,10 +596,10 @@ public class DGAuthServerService
         //지금 시간
         DateTime dtNow = DateTime.Now;
 
-        using (DgJwtAuthDbContext db1 = new DgJwtAuthDbContext())
+        using (DgAuthDbContext db1 = new DgAuthDbContext())
         {
 
-            IQueryable<DgJwtAuthRefreshToken> iqFindRT;
+            IQueryable<DgAuthRefreshToken> iqFindRT;
 
             if (true == bAllRevoke)
             {//전체 리보크
@@ -617,7 +616,7 @@ public class DGAuthServerService
 
             //linq는 데이터를 수정할때는 좋은 솔류션이 아니다.
             //반복문으로 직접수정하는 것이 훨씬 성능에 도움이 된다.
-            foreach (DgJwtAuthRefreshToken itemURT in iqFindRT)
+            foreach (DgAuthRefreshToken itemURT in iqFindRT)
             {
                 //만료 시간을 기입함
                 itemURT.RevokeTime = dtNow;
@@ -668,10 +667,10 @@ public class DGAuthServerService
     {
         bool bReturn = false;
 
-        using (DgJwtAuthDbContext db1 = new DgJwtAuthDbContext())
+        using (DgAuthDbContext db1 = new DgAuthDbContext())
         {
             //살아있는 토큰중 같은 토큰 있는지 검사
-            DgJwtAuthRefreshToken? findRT
+            DgAuthRefreshToken? findRT
                 = db1.DGAuthServer_RefreshToken
                     .Where(w => w.RefreshToken == sToken
                             && w.ActiveIs == true)

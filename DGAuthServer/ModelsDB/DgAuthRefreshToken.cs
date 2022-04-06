@@ -7,7 +7,7 @@ namespace DGAuthServer;
 /// <summary>
 /// 리플레시 토큰
 /// </summary>
-public class DgJwtAuthRefreshToken
+public class DgAuthRefreshToken
 {
 	/// <summary>
 	/// 유저 리플레시 토큰 고유키
@@ -76,7 +76,7 @@ public class DgJwtAuthRefreshToken
 	/// <summary>
 	/// 이 토큰의 사용가능여부를 다시 확인한다.
 	/// </summary>
-	public DgJwtAuthRefreshToken ActiveCheck()
+	public DgAuthRefreshToken ActiveCheck()
 	{
 		this.ExpiredIs = DateTime.UtcNow >= this.ExpiresTime;
 		this.RevokeIs = RevokeTime != null;

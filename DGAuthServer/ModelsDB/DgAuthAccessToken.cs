@@ -7,7 +7,7 @@ namespace DGAuthServer
 	/// <summary>
 	/// 엑세스 토큰
 	/// </summary>
-	public class DgJwtAuthAccessToken
+	public class DgAuthAccessToken
 	{
 
 		/// <summary>

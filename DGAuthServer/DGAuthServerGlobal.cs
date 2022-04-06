@@ -7,8 +7,8 @@ public static class DGAuthServerGlobal
 	/// <summary>
 	/// 사용할 옵션
 	/// </summary>
-	public static DgAuthServerSettingModel Setting 
-		= new DgAuthServerSettingModel();
+	public static DgAuthSettingModel Setting 
+		= new DgAuthSettingModel();
 
 	/// <summary>
 	/// 사용할 서비스 개체
