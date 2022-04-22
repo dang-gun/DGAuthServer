@@ -57,6 +57,9 @@ namespace WebApi_JwtAuthTest
                     AccessTokenLifetime = 60,
                     AccessTokenCookie = true,
                     RefreshTokenCookie = true,
+
+                    //메모리 캐쉬 사용 허용
+                    MemoryCacheIs = true,
                 }
                 //, (options => options.UseSqlite("Data Source=DGAuthServerTest.db")));
                 , null);
